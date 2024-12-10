@@ -186,7 +186,7 @@ func (d *Converter) convert(ctx *context) ([]byte, error) {
 			// })
 			pipeline.Stages = append(pipeline.Stages, &v2.StageV1{
 				Name:    from.Name,
-				Clone:   convertCloneV1(from.Clone),
+				Clone:   convertCloneV1(&from.Clone),
 				Runtime: "machine",
 				Steps:   convertSteps(from, d.orgSecrets),
 			})
