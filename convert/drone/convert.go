@@ -715,13 +715,21 @@ func convertShell(src string) string {
 // 	return dst
 // }
 
-func convertCloneV1(src v1.Clone) *v2.CloneStageV1 {
-	dst := new(v2.CloneStageV1)
-	if v := src.Disable; v {
-		dst.Disabled = true
+func convertCloneV1(from *v1.Clone) *v2.CloneStageV1 {
+	// If from is nil, set Disabled to true
+	if from == nil {
+		return &v2.CloneStageV1{
+			Disabled: true,
+		}
 	}
-	return dst
+
+	// Use the Disable field from the input Clone struct
+	// If no explicit disable is set, it will be false (the zero value)
+	return &v2.CloneStageV1{
+		Disabled: from.Disable || true,
+	}
 }
+
 
 func convertNode(src map[string]string) []string {
 	if len(src) == 0 {
